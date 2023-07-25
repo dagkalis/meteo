@@ -4,6 +4,9 @@ class Api::V1::BooksController < ApplicationController
   # GET /books
   def index
     @books = Book.all
+    session[:test] = :test
+
+    Rails.logger.debug session[:test]
 
     render json: @books
   end
