@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 // import Dashboard from "./dashboard";
-import Home from "./home";
+import Login from "../auth/login";
 import axios from "axios";
 import ForecastsView from "./forecasts";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,7 +24,7 @@ export default function App() {
           <Route
             path="/login"
             element={
-              <Home/>
+              <Login/>
             }
           />
           <Route

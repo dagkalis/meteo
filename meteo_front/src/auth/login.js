@@ -1,35 +1,36 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { usePostAPI } from "../components/customHooks";
 
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState("");
 
+  const navigate = useNavigate();
+
+  const { responseData, loading, error, postData } = usePostAPI('/sessions', {
+    user: {
+      email: email,
+      password: password
+    }
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    axios
-      .post(
-        "http://localhost:3000/sessions",
-        {
-          user: {
-            email: email,
-            password: password
-          }
-        },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        if (response.data.logged_in) {
-          props.handleSuccessfulAuth(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log("login error", error);
-        setLoginErrors("Login failed. Please check your credentials.");
-      });
+    postData();
   };
+
+  if(responseData?.logged_in){
+    console.log("Logged_in")
+    navigate('/');
+  }
+
+  if(error){
+    console.log("login error", error);
+    setLoginErrors("Login failed. Please check your credentials.");
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,34 +43,40 @@ function Login(props) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary btn-sm">
-          Login
-        </button>
-      </form>
-      {loginErrors && <p>{loginErrors}</p>}
+      <h1>Login</h1>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary btn-sm">
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+        {loginErrors && <p>{loginErrors}</p>}
+      </div>
+      <p>
+        Don't have an account? <Link to="/registration">Register</Link>
+      </p>
     </div>
   );
 }
