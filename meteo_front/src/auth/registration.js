@@ -28,7 +28,7 @@ export default function Registration() {
       .then((response) => {
         if (response.data.status === "created") {
           console.log("Registration data", response.data);
-          navigate('/');
+          navigate('/login');
         }
       })
       .catch((error) => {
@@ -91,7 +91,7 @@ export default function Registration() {
           Register
         </button>
         <p>
-          Have an account? <Link to="/">Login</Link>
+          Have an account? <Link to="/login">Login</Link>
         </p>
       </form>
     </div>

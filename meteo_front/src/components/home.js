@@ -8,7 +8,7 @@ function Home(props) {
 
   const handleSuccessfulAuth = (data) => {
     // props.handleLogin(data);
-    navigate('/forecasts');
+    navigate('/');
   };
 
   console.log("rendering home");
@@ -40,8 +40,8 @@ export default Home;
 //   handleSuccessfulAuth(data) {
 //     // const navigate = useNavigate();
 //     this.props.handleLogin(data);
-//     // this.props.navigate('/forecasts');
-//     this.props.navigate('/forecasts');
+//     // this.props.navigate('/login');
+//     this.props.navigate('/login');
 
 //     // this.props.history.push("/dashboard");
 //   }

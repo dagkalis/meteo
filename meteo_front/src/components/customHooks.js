@@ -32,7 +32,7 @@ export function useGetAPI(url, params = {}) {
           if (error.response && error.response.status === 401) {
             // Handle the 401 Unauthorized status code here
             // For example, navigate to the login page
-            navigate('/');
+            navigate('/login');
           } else {
             setError(error);
             setLoading(false);

@@ -10,17 +10,7 @@ import Registration from "../auth/registration";
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
 
-  // const handleSuccessfulAuth = (data) => {
-  //   // handleLogin(data);
-  // };
 
-  // const handleLogin = (data) => {
-  //   // setLoggedInStatus(true);
-  // };
-
-  // const handleLogout = () => {
-  //   // setLoggedInStatus(false);
-  // };
 
   useEffect(() => {
     // checkLoginStatus();
@@ -32,26 +22,19 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path="/login"
             element={
-              <Home
-                // loggedInStatus={loggedInStatus}
-                // handleLogin={handleLogin}
-                // handleLogout={handleLogout}
-              />
+              <Home/>
             }
           />
           <Route
             path="/registration"
             element={
-              <Registration
-                // handleSuccessfulAuth={handleSuccessfulAuth}
-                // loggedInStatus={loggedInStatus}
-              />
+              <Registration/>
             }
           />
           <Route
-            path="/forecasts"
+            path="/"
             element={<ForecastsView loggedInStatus={loggedInStatus} />}
           />
         </Routes>
@@ -140,7 +123,7 @@ function getAPIData(url) {
 //               />}
 //             />
 //             <Route
-//               path="/forecasts"
+//               path="/"
 //               element={<ForecastsView
 //                 loggedInStatus={this.state.loggedInStatus}
 //               />}
@@ -163,7 +146,7 @@ function getAPIData(url) {
 // // import ForecastsView from "./components/forecasts";
 // // import { useEffect, useState } from "react";
 
-// // const API_URL = "http://localhost:3000/api/v1/api/v1/api/v1/forecasts";
+// // const API_URL = "http://localhost:3000/api/v1/api/v1/api/v1/";
 
 // // function getAPIData() {
 // //   return axios.get(API_URL).then((response) => response.data);

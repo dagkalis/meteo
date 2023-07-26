@@ -12,7 +12,6 @@ import { useGetAPI } from './customHooks';
 // }
 
 
-// const API_URL = "http://localhost:3000/api/v1/forecasts";
 
 function ForecastsView(props) {
   const { data, loading, error } = useGetAPI('/api/v1/forecasts');
@@ -24,18 +23,6 @@ function ForecastsView(props) {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  // const [forecasts, setforecasts] = useState([]);
-
-  // useEffect(() => {
-  // let mounted = true;
-  // getAPIData(API_URL).then((items) => {
-  //   if (mounted) {
-  //     setforecasts(items);
-  //   }
-  // });
-  // return () => (mounted = false);
-  // }, []);
 
   return (
     <div>

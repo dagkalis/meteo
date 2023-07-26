@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
   def authenticate_user!
+    # reset_session
     if !@current_user
       Log.d "unauthorized"
       render json: "Unauthorized", status: 401
