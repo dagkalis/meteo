@@ -1,4 +1,4 @@
-class Api::V1::SessionsController < ApplicationController
+class SessionsController < ApplicationController
   include CurrentUserConcern
 
   def create
@@ -6,23 +6,28 @@ class Api::V1::SessionsController < ApplicationController
 
     if user
       session[:user_id] = user.id
+      Log.d :added_to_session
       render json: {
         status: :created,
         logged_in: true,
         user: user
       }
     else
+      Log.d :failed_login
       render json: { status: 401 }
     end
   end
 
   def logged_in
-    if @current_user
+    Log.d :checking_log_in
+    if false && @current_user
+      Log.d :logged_in
       render json: {
         logged_in: true,
         user: @current_user
       }
     else
+      Log.d :NOT_logged_in
       render json: {
         logged_in: false
       }
