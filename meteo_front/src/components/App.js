@@ -10,32 +10,20 @@ import Registration from "../auth/registration";
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
 
-  const checkLoginStatus = () => {
-    axios
-      .get("http://localhost:3000/logged_in", { withCredentials: true })
-      .then((response) => {
-        setLoggedInStatus(response.data.logged_in);
-      })
-      .catch((error) => {
-        setLoggedInStatus(false);
-        console.log("login error", error);
-      });
-  };
+  // const handleSuccessfulAuth = (data) => {
+  //   // handleLogin(data);
+  // };
 
-  const handleSuccessfulAuth = (data) => {
-    handleLogin(data);
-  };
+  // const handleLogin = (data) => {
+  //   // setLoggedInStatus(true);
+  // };
 
-  const handleLogin = (data) => {
-    setLoggedInStatus(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedInStatus(false);
-  };
+  // const handleLogout = () => {
+  //   // setLoggedInStatus(false);
+  // };
 
   useEffect(() => {
-    checkLoginStatus();
+    // checkLoginStatus();
   }, []);
 
   return (
@@ -47,9 +35,9 @@ export default function App() {
             path="/"
             element={
               <Home
-                loggedInStatus={loggedInStatus}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
+                // loggedInStatus={loggedInStatus}
+                // handleLogin={handleLogin}
+                // handleLogout={handleLogout}
               />
             }
           />
@@ -57,8 +45,8 @@ export default function App() {
             path="/registration"
             element={
               <Registration
-                handleSuccessfulAuth={handleSuccessfulAuth}
-                loggedInStatus={loggedInStatus}
+                // handleSuccessfulAuth={handleSuccessfulAuth}
+                // loggedInStatus={loggedInStatus}
               />
             }
           />

@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  include CurrentUserConcern
+  skip_before_action :authenticate_user!, only: [:create]
 
   def create
     user = User.find_by(email: params["user"]["email"]).try(:authenticate, params["user"]["password"])
@@ -18,21 +18,21 @@ class SessionsController < ApplicationController
     end
   end
 
-  def logged_in
-    Log.d :checking_log_in
-    if false && @current_user
-      Log.d :logged_in
-      render json: {
-        logged_in: true,
-        user: @current_user
-      }
-    else
-      Log.d :NOT_logged_in
-      render json: {
-        logged_in: false
-      }
-    end
-  end
+  # def logged_in
+  #   Log.d :checking_log_in
+  #   if @current_user
+  #     Log.d :logged_in
+  #     render json: {
+  #       logged_in: true,
+  #       user: @current_user
+  #     }
+  #   else
+  #     Log.d :NOT_logged_in
+  #     render json: {
+  #       logged_in: false
+  #     }
+  #   end
+  # end
 
   def logout
     reset_session

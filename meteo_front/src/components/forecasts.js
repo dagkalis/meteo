@@ -3,53 +3,69 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-function getAPIData(url) {
-  return axios.get(url).then((response) => response.data);
-}
+import { useGetAPI } from './customHooks';
 
 
-const API_URL = "http://localhost:3000/api/v1/forecasts";
+
+// function getAPIData(url) {
+//   return axios.get(url).then((response) => response.data);
+// }
+
+
+// const API_URL = "http://localhost:3000/api/v1/forecasts";
 
 function ForecastsView(props) {
-  const [forecasts, setforecasts] = useState([]);
+  const { data, loading, error } = useGetAPI('/api/v1/forecasts');
 
-  useEffect(() => {
-  let mounted = true;
-  getAPIData(API_URL).then((items) => {
-    if (mounted) {
-      setforecasts(items);
-    }
-  });
-  return () => (mounted = false);
-  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  // const [forecasts, setforecasts] = useState([]);
+
+  // useEffect(() => {
+  // let mounted = true;
+  // getAPIData(API_URL).then((items) => {
+  //   if (mounted) {
+  //     setforecasts(items);
+  //   }
+  // });
+  // return () => (mounted = false);
+  // }, []);
 
   return (
     <div>
       <table>
-          <thead>
-              <th>time</th>
-              <th>date</th>
-              <th>hour</th>
-              <th>temperature</th>
-              <th>rain</th>
-              <th>showers</th>
-              <th>cloudcover</th>
-          </thead>
-          <tbody>
-      {forecasts.map((forecast) => {
-        return (
+        <thead>
           <tr>
-              <td>{forecast.time}</td>
-              <td>{forecast.date}</td>
-              <td>{forecast.hour}</td>
-              <td>{forecast.temperature}</td>
-              <td>{forecast.rain}</td>
-              <td>{forecast.showers}</td>
-              <td>{forecast.cloudcover}</td>
+            <th>time</th>
+            <th>date</th>
+            <th>hour</th>
+            <th>temperature</th>
+            <th>rain</th>
+            <th>showers</th>
+            <th>cloudcover</th>
           </tr>
-        );
-      })}
-      </tbody>
+        </thead>
+        <tbody>
+          {data.map((forecast) => {
+            return (
+              <tr key={forecast.time}>
+                  <td>{forecast.time}</td>
+                  <td>{forecast.date}</td>
+                  <td>{forecast.hour}</td>
+                  <td>{forecast.temperature}</td>
+                  <td>{forecast.rain}</td>
+                  <td>{forecast.showers}</td>
+                  <td>{forecast.cloudcover}</td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );

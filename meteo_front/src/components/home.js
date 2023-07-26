@@ -7,8 +7,7 @@ function Home(props) {
   const navigate = useNavigate();
 
   const handleSuccessfulAuth = (data) => {
-    props.handleLogin(data);
-    setLoggedInStatus(true);
+    // props.handleLogin(data);
     navigate('/forecasts');
   };
 
@@ -16,7 +15,6 @@ function Home(props) {
   return (
     <div>
       <h1>Home</h1>
-      <h1>Status: {loggedInStatus ? "Logged in" : "NOT logged in"}</h1>
       <Login handleSuccessfulAuth={handleSuccessfulAuth} />
       <p>
         Don't have an account? <Link to="/registration">Register</Link>
