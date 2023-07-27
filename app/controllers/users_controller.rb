@@ -17,4 +17,9 @@ class UsersController < ApplicationController
       render json: { status: 500 }
     end
   end
+
+  def current_user_data
+    # Log.d @current_user.attributes.except('id', 'password_digest')
+    render json: @current_user.attributes.except('id', 'password_digest')
+  end
 end

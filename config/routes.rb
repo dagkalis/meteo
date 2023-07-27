@@ -3,12 +3,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books
       resources :forecasts
-
-
     end
   end
   resources :sessions, only: [:create]
-  resources :users
+  resources :users do
+    collection do
+      get :current_user_data
+    end
+  end
+
 
   delete :logout, to: "sessions#logout"
   get :logged_in, to: "sessions#logged_in"

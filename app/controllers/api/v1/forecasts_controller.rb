@@ -9,12 +9,14 @@ class Api::V1::ForecastsController < ApplicationController
     base_url = 'https://api.open-meteo.com/v1/forecast'
 
     # Replace these coordinates with the desired location
-    latitude = 40.640064
-    longitude = 22.944420
+    raise 'missing latitude or longitude' if !params[:latitude] || !params[:longitude]
+    latitude = params[:latitude] # 40.640064
+    longitude = params[:longitude] # 22.944420
 
     # https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41
     # Make the API request
     uri = URI("#{base_url}?latitude=#{latitude}&longitude=#{longitude}&hourly=temperature_2m,rain,showers,cloudcover")
+    Log.d uri
     response = Net::HTTP.get(uri)
 
     # Parse the JSON response

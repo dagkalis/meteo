@@ -3,27 +3,33 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-import { useGetAPI } from './customHooks';
+import { useGetAPI, useGetAPIWait } from './customHooks';
 
-
-
-// function getAPIData(url) {
-//   return axios.get(url).then((response) => response.data);
-// }
-
-
+let firstTime = true;
 
 function ForecastsView(props) {
-  const { data, loading, error } = useGetAPI('/api/v1/forecasts');
+  const { data: userData, loading: loadingUser, error: errorUser } = useGetAPI('/users/current_user_data');
+  const forecastParams = {}
+  const { responseData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = useGetAPIWait('/api/v1/forecasts', forecastParams);
 
-  if (loading) {
+  if(userData && userData.length !== 0 && firstTime){
+    firstTime = false;
+    console.log(userData)
+    forecastParams.latitude = userData.latitude;
+    forecastParams.longitude = userData.longitude;
+    console.log(forecastParams)
+    console.log("calling it")
+    getForecastData();
+  }
+
+  if (errorForecast) {
+    return <div>Error: {errorForecast.message}</div>;
+  }
+
+  if (loadingForecast) {
     return <div>Loading...</div>;
   }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
+  
   return (
     <div>
       <table>
@@ -39,7 +45,7 @@ function ForecastsView(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((forecast) => {
+          {responseData.map((forecast) => {
             return (
               <tr key={forecast.time}>
                   <td>{forecast.time}</td>
@@ -56,6 +62,9 @@ function ForecastsView(props) {
       </table>
     </div>
   );
+  
+
+
 }
 
 export default ForecastsView

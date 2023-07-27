@@ -50,6 +50,29 @@ export function useGetAPI(url, params = {}) {
 }
 
 // Custom hook for making POST requests
+export function useGetAPIWait(url, params = {}) {
+  const [responseData, setResponseData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const getData = () => {
+    setLoading(true);
+
+    api.get(url, { params })
+      .then((response) => {
+        setResponseData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  };
+
+  return { responseData, loading, error, getData };
+}
+
+// Custom hook for making POST requests
 export function usePostAPI(url, data) {
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
