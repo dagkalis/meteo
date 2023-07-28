@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books
       resources :forecasts
+      resources :weather_data_histories
     end
   end
   resources :sessions, only: [:create]
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
       get :current_user_data
     end
   end
+  
 
 
   delete :logout, to: "sessions#logout"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_26_144606) do
+ActiveRecord::Schema.define(version: 2023_07_28_214256) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -29,4 +29,13 @@ ActiveRecord::Schema.define(version: 2023_07_26_144606) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "weather_data_histories", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "data", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_weather_data_histories_on_user_id"
+  end
+
+  add_foreign_key "weather_data_histories", "users"
 end

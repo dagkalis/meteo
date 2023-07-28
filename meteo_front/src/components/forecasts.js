@@ -7,7 +7,13 @@ import * as requests from './customHooks';
 function ForecastsView(props) {
 
   let forecastParams = {};
-  const { responseData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = requests.useGetAPIWait('/api/v1/forecasts', forecastParams);
+  const { responseData: forecastData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = requests.useGetAPIWait('/api/v1/forecasts', forecastParams);
+
+  let weatherDataHistoryParams = {};
+  const { responseData: weatherDataPostResponse,
+     loading: weatherDataPostLoading,
+      error: weatherDataPostError,
+       postData: postWeatherData } = requests.usePostAPI('/api/v1/weather_data_histories', weatherDataHistoryParams);
 
   useEffect(() => {
     let errorMsg;
@@ -42,6 +48,15 @@ function ForecastsView(props) {
       }
     )
   }, []);
+
+  function storeWeatherData(){
+    weatherDataHistoryParams.data = JSON.stringify(forecastData)
+    postWeatherData(); 
+  }
+
+  if(weatherDataPostResponse){
+    document.getElementById("storeWeatheDataBtn").disabled = true;
+  }
   
   return (
     <div>
@@ -54,22 +69,23 @@ function ForecastsView(props) {
         ?
           <div>Error: {errorForecast.message}</div> 
         : 
-          <table>
-            <thead>
-              <tr>
-                <th>time</th>
-                <th>date</th>
-                <th>hour</th>
-                <th>temperature</th>
-                <th>rain</th>
-                <th>showers</th>
-                <th>cloudcover</th>
-              </tr>
-            </thead>
-            <tbody>
-              {responseData.map((forecast) => {
-                return (
-                  <tr key={forecast.time}>
+          (<>
+            <table>
+              <thead>
+                <tr>
+                  <th>time</th>
+                  <th>date</th>
+                  <th>hour</th>
+                  <th>temperature</th>
+                  <th>rain</th>
+                  <th>showers</th>
+                  <th>cloudcover</th>
+                </tr>
+              </thead>
+              <tbody>
+                {forecastData.map((forecast) => {
+                  return (
+                    <tr key={forecast.time}>
                       <td>{forecast.time}</td>
                       <td>{forecast.date}</td>
                       <td>{forecast.hour}</td>
@@ -77,12 +93,16 @@ function ForecastsView(props) {
                       <td>{forecast.rain}</td>
                       <td>{forecast.showers}</td>
                       <td>{forecast.cloudcover}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>)
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
+          </>)
+          )
       }
+
     </div>
   );
   
