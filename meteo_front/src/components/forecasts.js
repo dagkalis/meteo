@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import * as requests from './customHooks';
+import WeatherView from './weatherView';
 
 function ForecastsView(props) {
 
@@ -70,34 +71,7 @@ function ForecastsView(props) {
           <div>Error: {errorForecast.message}</div> 
         : 
           (<>
-            <table>
-              <thead>
-                <tr>
-                  <th>time</th>
-                  <th>date</th>
-                  <th>hour</th>
-                  <th>temperature</th>
-                  <th>rain</th>
-                  <th>showers</th>
-                  <th>cloudcover</th>
-                </tr>
-              </thead>
-              <tbody>
-                {forecastData.map((forecast) => {
-                  return (
-                    <tr key={forecast.time}>
-                      <td>{forecast.time}</td>
-                      <td>{forecast.date}</td>
-                      <td>{forecast.hour}</td>
-                      <td>{forecast.temperature}</td>
-                      <td>{forecast.rain}</td>
-                      <td>{forecast.showers}</td>
-                      <td>{forecast.cloudcover}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            < WeatherView weatherData={forecastData} />
             <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
           </>)
           )

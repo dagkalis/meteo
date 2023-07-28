@@ -3,8 +3,13 @@ class Api::V1::WeatherDataHistoriesController < ApplicationController
 
   # GET /weather_data_histories
   def index
-    @weather_data_histories = WeatherDataHistory.select(WeatherDataHistory.column_names - ['data'])
+    @weather_data_histories = WeatherDataHistory.select(WeatherDataHistory.column_names - ['data', 'updated_at'])
                                                 .where(user_id: current_user.id)
+                                                .order(id: :desc)
+                                                .map(&:attributes)
+                                                .each{ |weather_data_history| weather_data_history['created_at'] = weather_data_history['created_at'].strftime('%d/%m/%Y %H:%M')}
+
+
 
     render json: @weather_data_histories
   end

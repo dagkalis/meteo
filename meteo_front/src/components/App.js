@@ -6,6 +6,7 @@ import axios from "axios";
 import ForecastsView from "./forecasts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Registration from "../auth/registration";
+import WeatherDataHistories from "./weatherDataHistories";
 
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -33,6 +34,10 @@ export default function App() {
             }
           />
           <Route
+            path="/weather_data_histories"
+            element={<WeatherDataHistories />}
+          />
+          <Route
             path="/"
             element={<ForecastsView loggedInStatus={loggedInStatus} />}
           />
@@ -40,10 +45,6 @@ export default function App() {
       </BrowserRouter>
     </div>
   );
-}
-
-function getAPIData(url) {
-  return axios.get(url).then((response) => response.data);
 }
 
 
