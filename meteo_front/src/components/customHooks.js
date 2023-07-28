@@ -57,6 +57,7 @@ export function useGetAPIWait(url, params = {}) {
 
   const getData = () => {
     setLoading(true);
+    setError(false);
 
     api.get(url, { params })
       .then((response) => {
@@ -93,4 +94,29 @@ export function usePostAPI(url, data) {
   };
 
   return { responseData, loading, error, postData };
+}
+
+
+// Custom hook for making Patch requests
+export function usePatchAPI(url, data) {
+  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const patchData = () => {
+    setLoading(true);
+
+    api.patch(url, data)
+      .then((response) => {
+        setResponseData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log('error with patch', error)
+        setError(error);
+        setLoading(false);
+      });
+  };
+
+  return { responseData, loading, error, patchData };
 }

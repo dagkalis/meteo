@@ -19,6 +19,9 @@ class Api::V1::ForecastsController < ApplicationController
     Log.d uri
     response = Net::HTTP.get(uri)
 
+    # todo response
+    # Log.d response unless response.kind_of? Net::HTTPSuccess
+
     # Parse the JSON response
     raw_data = JSON.parse(response).deep_transform_keys(&:to_sym)
 
