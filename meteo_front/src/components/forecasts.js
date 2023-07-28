@@ -4,74 +4,47 @@ import axios from "axios";
 
 import * as requests from './customHooks';
 
-
-let firstTime = true;
-
 function ForecastsView(props) {
-  const { data: userData, loading: loadingUser, error: errorUser } = requests.useGetAPI('/users/current_user_data');
-  const forecastParams = {};
-  
-  const { responseUserData, loading, error, patchData: patchUserData } = requests.usePatchAPI(`/users/${userData.id}`, forecastParams );
 
-  
+  let forecastParams = {};
   const { responseData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = requests.useGetAPIWait('/api/v1/forecasts', forecastParams);
 
-  if(userData && userData.length !== 0 && firstTime){
-    firstTime = false;
-    forecastParams.latitude = userData.latitude;
-    forecastParams.longitude = userData.longitude;
-    getForecastData();
-  }
-
-  const handleCoSubmit = (event) => {
-    // const formData = new FormData(event.currentTarget);
-    let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
-    event.preventDefault();
+  useEffect(() => {
+    let errorMsg;
+    if (!navigator.geolocation){
+      alert("Geolocation is not supported by this browser.");
+      return;
+    }
     
-    // console.log(formObject);
-    forecastParams.latitude = formObject.latitude;
-    forecastParams.longitude = formObject.longitude;
-    // getForecastData();
-    patchUserData();
-  };
-
-  // if (errorForecast) {
-  //   return 
-  // }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        forecastParams.latitude = position.coords.latitude;
+        forecastParams.longitude = position.coords.longitude;
+        getForecastData();
+      },
+      (error) => {
+        console.log(error);
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            errorMsg = "Please allow the location request."
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMsg = "Location information is unavailable."
+            break;
+          case error.TIMEOUT:
+            errorMsg = "The request to get user location timed out."
+            break;
+          case error.UNKNOWN_ERROR:
+            errorMsg = "An unknown error occurred."
+            break;
+        }
+        alert(errorMsg)
+      }
+    )
+  }, []);
   
   return (
     <div>
-      <div>
-      <h1>Coordinates</h1>
-      <div>
-        <form onSubmit={handleCoSubmit}>
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="text"
-              name="longitude"
-              placeholder="longitude"
-              required
-              defaultValue={userData.longitude || ''}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="text"
-              name="latitude"
-              placeholder="latitude"
-              defaultValue={userData.latitude || ''}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-sm">
-            {  loadingUser ? 'Loading...' : (loadingForecast ? 'Loading forecast...' : 'Load forecast') }
-          </button>
-        </form>
-        {/* {loginErrors && <p>{loginErrors}</p>} */}
-      </div>
-    </div>
       { 
       loadingForecast
       ?
@@ -118,3 +91,58 @@ function ForecastsView(props) {
 }
 
 export default ForecastsView
+
+
+  // const { data: userData, loading: loadingUser, error: errorUser } = requests.useGetAPI('/users/current_user_data');
+  // const { responseUserData, loading, error, patchData: patchUserData } = requests.usePatchAPI(`/users/${userData.id}`, forecastParams );
+
+  // if(userData && userData.length !== 0 && firstTime){
+  //   firstTime = false;
+  //   forecastParams.latitude = userData.latitude;
+  //   forecastParams.longitude = userData.longitude;
+  //   getForecastData();
+  // }
+
+  // const handleCoSubmit = (event) => {
+  //   // const formData = new FormData(event.currentTarget);
+  //   let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
+  //   event.preventDefault();
+    
+  //   // console.log(formObject);
+  //   forecastParams.latitude = formObject.latitude;
+  //   forecastParams.longitude = formObject.longitude;
+  //   // getForecastData();
+  //   patchUserData();
+  // };
+
+
+  {/* <div>
+        <h1>Coordinates</h1>
+        <div>
+          <form onSubmit={handleCoSubmit}>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="text"
+                name="longitude"
+                placeholder="longitude"
+                required
+                defaultValue={userData.longitude || ''}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="text"
+                name="latitude"
+                placeholder="latitude"
+                defaultValue={userData.latitude || ''}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary btn-sm">
+              {  loadingUser ? 'Loading...' : (loadingForecast ? 'Loading forecast...' : 'Load forecast') }
+            </button>
+          </form>
+        </div>
+      </div> */}

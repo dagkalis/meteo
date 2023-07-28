@@ -12,10 +12,11 @@ const api = axios.create({
 
 // Custom hook for making GET requests
 export function useGetAPI(url, params = {}) {
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();  
 
   useEffect(() => {
     let isMounted = true;
@@ -51,6 +52,8 @@ export function useGetAPI(url, params = {}) {
 
 // Custom hook for making POST requests
 export function useGetAPIWait(url, params = {}) {
+  const navigate = useNavigate();
+
   const [responseData, setResponseData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -65,8 +68,14 @@ export function useGetAPIWait(url, params = {}) {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error);
-        setLoading(false);
+        if (error.response && error.response.status === 401) {
+          // Handle the 401 Unauthorized status code here
+          // For example, navigate to the login page
+          navigate('/login');
+        } else {
+          setError(error);
+          setLoading(false);
+        }
       });
   };
 
@@ -75,6 +84,8 @@ export function useGetAPIWait(url, params = {}) {
 
 // Custom hook for making POST requests
 export function usePostAPI(url, data) {
+  const navigate = useNavigate();
+
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -88,8 +99,14 @@ export function usePostAPI(url, data) {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error);
-        setLoading(false);
+        if (error.response && error.response.status === 401) {
+          // Handle the 401 Unauthorized status code here
+          // For example, navigate to the login page
+          navigate('/login');
+        } else {
+          setError(error);
+          setLoading(false);
+        }
       });
   };
 
@@ -99,6 +116,8 @@ export function usePostAPI(url, data) {
 
 // Custom hook for making Patch requests
 export function usePatchAPI(url, data) {
+  const navigate = useNavigate();
+  
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -113,8 +132,14 @@ export function usePatchAPI(url, data) {
       })
       .catch((error) => {
         console.log('error with patch', error)
-        setError(error);
-        setLoading(false);
+        if (error.response && error.response.status === 401) {
+          // Handle the 401 Unauthorized status code here
+          // For example, navigate to the login page
+          navigate('/login');
+        } else {
+          setError(error);
+          setLoading(false);
+        }
       });
   };
 

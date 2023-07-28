@@ -18,7 +18,6 @@ export default function App() {
 
   return (
     <div className="app">
-      {console.log("here 1")}
       <BrowserRouter>
         <Routes>
           <Route

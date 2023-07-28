@@ -6,7 +6,7 @@ module CurrentUserConcern
   end
 
   def set_current_user
-    Log.d session_hash: session
+    # Log.d session_hash: session
     if session[:user_id]
       @current_user = User.find(session[:user_id])
     end
