@@ -9,7 +9,6 @@ function User(props) {
   const userPatchRequest = requests.usePatchAPI('/users/0');
 
   const handleSubmit = (event) => {
-    // const formData = new FormData(event.currentTarget);
     let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
     event.preventDefault();
 
@@ -17,13 +16,6 @@ function User(props) {
 		for ( var key in formObject ) {
 			form_data.append(key, formObject[key]);
 		}
-
-		// var userData = new FormData();
-		// userData.append("user", form_data);
-
-		// const userData = {user: form_data}
-
-		// console.log(document.getElementById("resume_file").files[0])
 
     console.log("formObject", form_data);
     userPatchRequest.patchData(form_data);
@@ -33,7 +25,7 @@ function User(props) {
 
 	return (
 		<div>
-			<h1>Coordinates</h1>
+			<h1>User data</h1>
 			<div>
 				<form onSubmit={handleSubmit}>
 					<div className="form-group">

@@ -5,15 +5,15 @@ import Login from "../auth/login";
 import axios from "axios";
 import ForecastsView from "./forecasts";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/general.scss"
+
 import Registration from "../auth/registration";
 import WeatherDataHistories from "./weatherDataHistories";
 import WeatherDataHistory from "./weatherDataHistory";
 import User from "./user";
+import Navbar from "./navbar";
 
 export default function App() {
-  const [loggedInStatus, setLoggedInStatus] = useState(false);
-
-
 
   useEffect(() => {
     // checkLoginStatus();
@@ -22,10 +22,11 @@ export default function App() {
   return (
     <div className="app">
       <BrowserRouter>
+        < Navbar />
         <Routes>
-        <Route
+          <Route
             path="/"
-            element={<ForecastsView loggedInStatus={loggedInStatus} />}
+            element={<ForecastsView />}
           />
           <Route
             path="/login"
