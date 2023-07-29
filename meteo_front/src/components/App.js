@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Registration from "../auth/registration";
 import WeatherDataHistories from "./weatherDataHistories";
 import WeatherDataHistory from "./weatherDataHistory";
+import User from "./user";
 
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -36,6 +37,12 @@ export default function App() {
             path="/registration"
             element={
               <Registration/>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <User/>
             }
           />
           <Route

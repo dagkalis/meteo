@@ -115,14 +115,14 @@ export function usePostAPI(url, data) {
 
 
 // Custom hook for making Patch requests
-export function usePatchAPI(url, data) {
+export function usePatchAPI(url) {
   const navigate = useNavigate();
   
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const patchData = () => {
+  const patchData = (data) => {
     setLoading(true);
 
     api.patch(url, data)

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
+    user = current_user
     if user.update(user_params)
       Log.d :updated
       render json: "ok", status: 200
@@ -31,11 +31,17 @@ class UsersController < ApplicationController
 
   def current_user_data
     # Log.d @current_user.attributes.except('id', 'password_digest')
-    render json: @current_user.attributes.except('password_digest')
+    render json: @current_user.attributes
+                              .except('password_digest', 'resume')
+                              .merge('resume_url' => "#{request.base_url}/users/user_resume")
+  end
+
+  def user_resume
+    send_data current_user.resume, filename: current_user.resume_name
   end
 
   def user_params
-    params.require(:user).permit(:email, :resume, :password_confirmation, :password_confirmation)
+    params.permit(:email, :resume_data, :password, :password_confirmation)
   end
 
   # def user_password_params

@@ -3,6 +3,11 @@ class User < ApplicationRecord
   validates_presence_of :email
   validates_uniqueness_of :email
 
+  def resume_data=(data)
+    self.resume = data.read
+    self.resume_name = data.original_filename
+  end
+
   # validates :password, length: { minimum: 4 }, if: :password_required?
   # validates :password_confirmation, length: { minimum: 4 }, if: :password_required?
 

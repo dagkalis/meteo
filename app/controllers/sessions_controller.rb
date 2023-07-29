@@ -9,8 +9,7 @@ class SessionsController < ApplicationController
       Log.d :added_to_session
       render json: {
         status: :created,
-        logged_in: true,
-        user: user
+        logged_in: true
       }
     else
       Log.d :failed_login

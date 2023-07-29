@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :current_user_data
+      get :user_resume
     end
   end
   
