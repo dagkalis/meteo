@@ -1,15 +1,15 @@
 @import 'colors.scss';
 
 body {
-    background-color: $cream;
+	background-color: $cream;
 }
 
 button {
-    background-color: $dark_blue !important;
-    color: white !important;
+	background-color: $dark_blue !important;
+	color: white !important;
 }
 
 button.btn-danger {
-    background-color: red !important;
-    color: white !important;
+	background-color: red !important;
+	color: white !important;
 }

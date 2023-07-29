@@ -41,13 +41,13 @@ function WeatherView(props) {
 	};
 
 	return (
-    <Chart
-      chartType="LineChart"
-      width="100%"
-      height="400px"
-      data={data}
-      options={options}
-    />
+	<Chart
+	  chartType="LineChart"
+	  width="100%"
+	  height="400px"
+	  data={data}
+	  options={options}
+	/>
   ); 
 	
 

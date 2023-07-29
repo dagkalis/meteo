@@ -18,12 +18,12 @@ function ForecastDatesNav(props) {
 		return ''
 	}
 
-	function chooseDate(event){
+	function chooseDate(event) {
 		console.log(event.target.id)
 		props.setCurrentDate(event.target.id);
 	}
 
-	return ( 
+	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light">
 				<div className="container-fluid">
@@ -36,7 +36,7 @@ function ForecastDatesNav(props) {
 									</a>
 								);
 							})}
-						
+
 						</div>
 					</div>
 				</div>
