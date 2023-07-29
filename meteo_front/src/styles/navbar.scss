@@ -4,12 +4,17 @@
     background-color: $dark_blue;
 }
 
-.nav-item.nav-link {
+.nav-link {
     color: rgba(255, 255, 255, 0.907) !important;
     cursor: pointer;
 }
 
-.nav-item.nav-link.active {
+.nav-link.active {
     color: white !important;
     font-weight: bolder;
+}
+
+.nav-item.dropdown.active .nav-link {
+    color: white !important;
+    font-weight: bolder !important;
 }

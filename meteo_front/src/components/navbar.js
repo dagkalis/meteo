@@ -5,6 +5,9 @@ import * as Icon from 'react-bootstrap-icons';
 
 import * as requests from './customHooks';
 
+// import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
 
 function Navbar(props) {
 	const navigate = useNavigate();
@@ -14,7 +17,7 @@ function Navbar(props) {
 
 
 	function isActive(path){
-		if (path === location.pathname){
+		if (path.split('/')[1] === location.pathname.split('/')[1]){
 			return 'active'
 		}
 		return ''
@@ -50,7 +53,15 @@ function Navbar(props) {
 								<a onClick={()=>{navigate('/login')}} className={`nav-item nav-link ${isActive('/login')}`}  tabIndex="-1">Login</a>
 							</>				
 						: <>
-								<a onClick={()=>{navigate('/user')}} className={`nav-item nav-link ${isActive('/login')}`}  tabIndex="-1">User</a>
+								{/* <a onClick={()=>{navigate('/user')}} className={`nav-item nav-link ${isActive('/user')}`}  tabIndex="-1">User</a> */}
+
+								<NavDropdown id="nav-dropdown" className={isActive('/user')} title="User">
+									<NavDropdown.Item onClick={()=>{navigate('/user')}} >Edit account data</NavDropdown.Item>
+									<NavDropdown.Item onClick={()=>{navigate('/user?password=true')}}>
+										Edit account password
+									</NavDropdown.Item>
+								</NavDropdown>
+							
 								<a onClick={logout} className={`nav-item nav-link`}  tabIndex="-1">
 									<Icon.Power size="25" />
 								</a>
