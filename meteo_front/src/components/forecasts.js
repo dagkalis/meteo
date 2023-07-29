@@ -5,6 +5,7 @@ import axios from "axios";
 import * as requests from './customHooks';
 import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
+import * as Icon from 'react-bootstrap-icons';
 
 function ForecastsView(props) {
 
@@ -70,14 +71,26 @@ function ForecastsView(props) {
       Object.keys(forecastData).length > 0
       ?
         (<>
-          {<ForecastDatesNav dates={Object.keys(forecastData)}
-                            currentDate={currentDate}
-                            setCurrentDate={setCurrentDate} 
-          />}
-          
-          {< WeatherView weatherData={forecastData}
-                         currentDate={currentDate}  />}
-          <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
+          <div >
+            {/* <br></br><br></br> */}
+
+            {<ForecastDatesNav dates={Object.keys(forecastData)}
+                              currentDate={currentDate}
+                              setCurrentDate={setCurrentDate} 
+            />}
+
+
+            <div style={{margin: "1em"}}>
+              {< WeatherView weatherData={forecastData}
+                            currentDate={currentDate}  />}
+
+              <br></br><br></br>
+
+                <button style={{float: "right"}} onClick ={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
+                  <Icon.Save2 size="20" /> | Save
+                </button>
+            </div>
+          </div>
         </>)
       :
         (errorForecast 

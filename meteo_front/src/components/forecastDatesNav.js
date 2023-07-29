@@ -31,7 +31,7 @@ function ForecastDatesNav(props) {
 						<div className="navbar-nav">
 							{props.dates.map((date) => {
 								return (
-									<a id={date} onClick={chooseDate} className={`nav-item nav-link ${isActive2(date)}`}>
+									<a id={date} key={date} onClick={chooseDate} className={`nav-item nav-link ${isActive2(date)}`}>
 										{date}
 									</a>
 								);

@@ -17,7 +17,27 @@ function WeatherView(props) {
 		title: props.currentDate,
 		curveType: "function",
 		legend: { position: "bottom" },
-		backgroundColor: "white",// window.getComputedStyle(document.body, null).getPropertyValue('background-color'),
+		// backgroundColor: "white", //
+		// hAxis: {
+		// 	textStyle: {
+		// 	  color: '#000'
+		// 	}
+		//   },
+		// vAxis: {
+		// textStyle: {
+		// 	color: '#000'
+		// }  
+		// },
+		// colors: ['cyan'],
+		// titleTextStyle: {
+		// 	color: '#000'
+		//   },
+
+		//   backgroundColor: {
+		// 	fill: window.getComputedStyle(document.body, null).getPropertyValue('background-color'),
+		//   },
+
+		// opacity: '0.3'
 	};
 
 	return (

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import * as requests from './customHooks';
 import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
+import * as Icon from 'react-bootstrap-icons';
 
 let deleteFlag = false; // whether deleteWeatherDataHistoryBtn has been clicked
 
@@ -15,8 +16,10 @@ function WeatherDataHistory(props) {
 
 	function deleteWeatherDataHistory() {
 		console.log(deleteRequest);
-		deleteRequest.deleteData();
-		deleteFlag = true;
+		if(window.confirm("Are you sure you want to delete the record?")){
+			deleteRequest.deleteData();
+			deleteFlag = true;
+		}
 	}
 
 	const [currentDate, setCurrentDate] = useState("");
@@ -42,19 +45,27 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 	}
 
 	if (request.data.length != 0) {
-		if(!jsonData) jsonData = JSON.parse(request.data.data);
+		if (!jsonData)
+			jsonData = JSON.parse(request.data.data);
 
-		if(Object.keys(jsonData).length > 0 && currentDate === "")
-    	setCurrentDate(Object.keys(jsonData)[0]) // set the first date
+		if (Object.keys(jsonData).length > 0 && currentDate === "")
+			setCurrentDate(Object.keys(jsonData)[0]) // set the first date
+
 		return <>
-			{<ForecastDatesNav dates={Object.keys(jsonData)}
-													currentDate={currentDate}
-													setCurrentDate={setCurrentDate}
-			/>}
+			<div style={{margin: "1em"}}>
+				{<ForecastDatesNav dates={Object.keys(jsonData)}
+					currentDate={currentDate}
+					setCurrentDate={setCurrentDate}
+				/>}
 
-			{< WeatherView weatherData={jsonData}
-											currentDate={currentDate} />}
-			<button id="deleteWeatherDataHistoryBtn" onClick={deleteWeatherDataHistory}>Delete</button>
+				{< WeatherView weatherData={jsonData}
+					currentDate={currentDate} />}
+
+				<br></br><br></br>
+				<button style={{float: "right"}} onClick ={deleteWeatherDataHistory} id='deleteWeatherDataHistoryBtn' className="float-right btn-danger btn btn-lg">
+        	<Icon.Trash size="20" /> | Delete
+				</button>
+			</div>
 		</>
 
 	}
