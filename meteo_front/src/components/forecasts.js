@@ -16,17 +16,17 @@ function ForecastsView(props) {
 
   let weatherDataHistoryParams = {};
   const { responseData: weatherDataPostResponse,
-     loading: weatherDataPostLoading,
-      error: weatherDataPostError,
-       postData: postWeatherData } = requests.usePostAPI('/api/v1/weather_data_histories', weatherDataHistoryParams);
+    loading: weatherDataPostLoading,
+    error: weatherDataPostError,
+    postData: postWeatherData } = requests.usePostAPI('/api/v1/weather_data_histories', weatherDataHistoryParams);
 
   useEffect(() => {
     let errorMsg;
-    if (!navigator.geolocation){
+    if (!navigator.geolocation) {
       alert("Geolocation is not supported by this browser.");
       return;
     }
-    
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         forecastParams.latitude = position.coords.latitude;
@@ -35,7 +35,7 @@ function ForecastsView(props) {
       },
       (error) => {
         console.log(error);
-        switch(error.code) {
+        switch (error.code) {
           case error.PERMISSION_DENIED:
             errorMsg = "Please allow the location request."
             break;
@@ -54,56 +54,56 @@ function ForecastsView(props) {
     )
   }, []);
 
-  function storeWeatherData(){
+  function storeWeatherData() {
     weatherDataHistoryParams.data = JSON.stringify(forecastData)
-    postWeatherData(); 
+    postWeatherData();
   }
 
-  if(weatherDataPostResponse){
+  if (weatherDataPostResponse) {
     document.getElementById("storeWeatheDataBtn").disabled = true;
   }
-  if(Object.keys(forecastData).length > 0 && currentDate === "")
+  if (Object.keys(forecastData).length > 0 && currentDate === "")
     setCurrentDate(Object.keys(forecastData)[0]) // set the first date
 
   return (
     <div>
       {
-      Object.keys(forecastData).length > 0
-      ?
-        (<>
-          <div >
-            {/* <br></br><br></br> */}
+        Object.keys(forecastData).length > 0
+          ?
+          (<>
+            <div >
+              {/* <br></br><br></br> */}
 
-            {<ForecastDatesNav dates={Object.keys(forecastData)}
-                              currentDate={currentDate}
-                              setCurrentDate={setCurrentDate} 
-            />}
+              {<ForecastDatesNav dates={Object.keys(forecastData)}
+                currentDate={currentDate}
+                setCurrentDate={setCurrentDate}
+              />}
 
 
-            <div style={{margin: "1em"}}>
-              {< WeatherView weatherData={forecastData}
-                            currentDate={currentDate}  />}
+              <div style={{ margin: "1em" }}>
+                {< WeatherView weatherData={forecastData}
+                  currentDate={currentDate} />}
 
-              <br></br><br></br>
+                <br></br><br></br>
 
-                <button style={{float: "right"}} onClick ={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
+                <button style={{ float: "right" }} onClick={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
                   <Icon.Save2 size="20" /> | Save
                 </button>
+              </div>
             </div>
-          </div>
-        </>)
-      :
-        (errorForecast 
-        ?
-          <div>Error: {errorForecast.message}</div> 
-        : 
-          <div>Loading...</div>
-        )
+          </>)
+          :
+          (errorForecast
+            ?
+            <div>Error: {errorForecast.message}</div>
+            :
+            <div>Loading...</div>
+          )
       }
 
     </div>
   );
-  
+
 
 
 }
@@ -111,30 +111,30 @@ function ForecastsView(props) {
 export default ForecastsView;
 
 
-  // const { data: userData, loading: loadingUser, error: errorUser } = requests.useGetAPI('/users/current_user_data');
-  // const { responseUserData, loading, error, patchData: patchUserData } = requests.usePatchAPI(`/users/${userData.id}`, forecastParams );
+// const { data: userData, loading: loadingUser, error: errorUser } = requests.useGetAPI('/users/current_user_data');
+// const { responseUserData, loading, error, patchData: patchUserData } = requests.usePatchAPI(`/users/${userData.id}`, forecastParams );
 
-  // if(userData && userData.length !== 0 && firstTime){
-  //   firstTime = false;
-  //   forecastParams.latitude = userData.latitude;
-  //   forecastParams.longitude = userData.longitude;
-  //   getForecastData();
-  // }
+// if(userData && userData.length !== 0 && firstTime){
+//   firstTime = false;
+//   forecastParams.latitude = userData.latitude;
+//   forecastParams.longitude = userData.longitude;
+//   getForecastData();
+// }
 
-  // const handleCoSubmit = (event) => {
-  //   // const formData = new FormData(event.currentTarget);
-  //   let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
-  //   event.preventDefault();
-    
-  //   // console.log(formObject);
-  //   forecastParams.latitude = formObject.latitude;
-  //   forecastParams.longitude = formObject.longitude;
-  //   // getForecastData();
-  //   patchUserData();
-  // };
+// const handleCoSubmit = (event) => {
+//   // const formData = new FormData(event.currentTarget);
+//   let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
+//   event.preventDefault();
+
+//   // console.log(formObject);
+//   forecastParams.latitude = formObject.latitude;
+//   forecastParams.longitude = formObject.longitude;
+//   // getForecastData();
+//   patchUserData();
+// };
 
 
-  {/* <div>
+{/* <div>
         <h1>Coordinates</h1>
         <div>
           <form onSubmit={handleCoSubmit}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 import * as requests from './customHooks';
 import WeatherView from './weatherView';
@@ -16,7 +16,7 @@ function WeatherDataHistory(props) {
 
 	function deleteWeatherDataHistory() {
 		console.log(deleteRequest);
-		if(window.confirm("Are you sure you want to delete the record?")){
+		if (window.confirm("Are you sure you want to delete the record?")) {
 			deleteRequest.deleteData();
 			deleteFlag = true;
 		}
@@ -52,7 +52,7 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 			setCurrentDate(Object.keys(jsonData)[0]) // set the first date
 
 		return <>
-			<div style={{margin: "1em"}}>
+			<div style={{ margin: "1em" }}>
 				{<ForecastDatesNav dates={Object.keys(jsonData)}
 					currentDate={currentDate}
 					setCurrentDate={setCurrentDate}
@@ -62,8 +62,8 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 					currentDate={currentDate} />}
 
 				<br></br><br></br>
-				<button style={{float: "right"}} onClick ={deleteWeatherDataHistory} id='deleteWeatherDataHistoryBtn' className="float-right btn-danger btn btn-lg">
-        	<Icon.Trash size="20" /> | Delete
+				<button style={{ float: "right" }} onClick={deleteWeatherDataHistory} id='deleteWeatherDataHistoryBtn' className="float-right btn-danger btn btn-lg">
+					<Icon.Trash size="20" /> | Delete
 				</button>
 			</div>
 		</>

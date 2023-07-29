@@ -48,7 +48,7 @@ function WeatherView(props) {
       data={data}
       options={options}
     />
-  );
+  ); 
 	
 
 
