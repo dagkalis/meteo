@@ -61,20 +61,20 @@ function ForecastsView(props) {
   
   return (
     <div>
-      { 
-      loadingForecast
+      {
+      Object.keys(forecastData).length > 0
       ?
-      <div>Loading...</div>
+        (<>
+          <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
+          < WeatherView weatherData={forecastData} />
+        </>)
       :
         (errorForecast 
         ?
           <div>Error: {errorForecast.message}</div> 
         : 
-          (<>
-            <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
-            < WeatherView weatherData={forecastData} />
-          </>)
-          )
+          <div>Loading...</div>
+        )
       }
 
     </div>

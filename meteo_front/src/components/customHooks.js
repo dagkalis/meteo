@@ -60,7 +60,7 @@ export function useGetAPIWait(url, params = {}) {
 
   const [responseData, setResponseData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   const getData = () => {
     setLoading(true);
