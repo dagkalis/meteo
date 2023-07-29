@@ -145,3 +145,39 @@ export function usePatchAPI(url, data) {
 
   return { responseData, loading, error, patchData };
 }
+
+
+// Custom hook for making Delete requests
+export function useDeleteAPI(url) {
+  const navigate = useNavigate();
+  
+  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const deleteData = () => {
+    setLoading(true);
+    setError(false);
+
+    api.delete(url)
+      .then((response) => {
+        // if request successful but no content from api, put 'deleted'
+        // so that it's easy to check if request is done
+        setResponseData(response.data || 'deleted'); 
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log('error with delete', error)
+        if (error.response && error.response.status === 401) {
+          // Handle the 401 Unauthorized status code here
+          // For example, navigate to the login page
+          navigate('/login');
+        } else {
+          setError(error);
+          setLoading(false);
+        }
+      });
+  };
+
+  return { responseData, loading, error, deleteData };
+}

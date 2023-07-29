@@ -71,8 +71,8 @@ function ForecastsView(props) {
           <div>Error: {errorForecast.message}</div> 
         : 
           (<>
-            < WeatherView weatherData={forecastData} />
             <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
+            < WeatherView weatherData={forecastData} />
           </>)
           )
       }

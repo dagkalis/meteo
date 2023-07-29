@@ -7,6 +7,7 @@ import ForecastsView from "./forecasts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Registration from "../auth/registration";
 import WeatherDataHistories from "./weatherDataHistories";
+import WeatherDataHistory from "./weatherDataHistory";
 
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -21,6 +22,10 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <Routes>
+        <Route
+            path="/"
+            element={<ForecastsView loggedInStatus={loggedInStatus} />}
+          />
           <Route
             path="/login"
             element={
@@ -38,8 +43,8 @@ export default function App() {
             element={<WeatherDataHistories />}
           />
           <Route
-            path="/"
-            element={<ForecastsView loggedInStatus={loggedInStatus} />}
+            path="/weather_data_histories/:id"
+            element={< WeatherDataHistory />}
           />
         </Routes>
       </BrowserRouter>
