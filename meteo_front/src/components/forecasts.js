@@ -4,11 +4,14 @@ import axios from "axios";
 
 import * as requests from './customHooks';
 import WeatherView from './weatherView';
+import ForecastDatesNav from './forecastDatesNav';
 
 function ForecastsView(props) {
 
   let forecastParams = {};
   const { responseData: forecastData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = requests.useGetAPIWait('/api/v1/forecasts', forecastParams);
+
+  const [currentDate, setCurrentDate] = useState("");
 
   let weatherDataHistoryParams = {};
   const { responseData: weatherDataPostResponse,
@@ -58,15 +61,23 @@ function ForecastsView(props) {
   if(weatherDataPostResponse){
     document.getElementById("storeWeatheDataBtn").disabled = true;
   }
-  
+  if(Object.keys(forecastData).length > 0 && currentDate === "")
+    setCurrentDate(Object.keys(forecastData)[0]) // set the first date
+
   return (
     <div>
       {
       Object.keys(forecastData).length > 0
       ?
         (<>
+          {<ForecastDatesNav dates={Object.keys(forecastData)}
+                            currentDate={currentDate}
+                            setCurrentDate={setCurrentDate} 
+          />}
+          
+          {< WeatherView weatherData={forecastData}
+                         currentDate={currentDate}  />}
           <button id="storeWeatheDataBtn" onClick ={storeWeatherData}>Save </button>
-          < WeatherView weatherData={forecastData} />
         </>)
       :
         (errorForecast 
@@ -84,7 +95,7 @@ function ForecastsView(props) {
 
 }
 
-export default ForecastsView
+export default ForecastsView;
 
 
   // const { data: userData, loading: loadingUser, error: errorUser } = requests.useGetAPI('/users/current_user_data');

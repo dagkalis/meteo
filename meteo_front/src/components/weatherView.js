@@ -9,14 +9,15 @@ function WeatherView(props) {
 		["Hour", "Temperature"],
 	];
 
-	props.weatherData[Object.keys(props.weatherData)[0]].forEach(element => {
-		data.push([element.hour, element.temp])
+	props.weatherData[props.currentDate].forEach(element => {
+		data.push([`${element.hour}:00`, element.temp])
 	});
 
 	const options = {
-		title: "29/7/2023",
+		title: props.currentDate,
 		curveType: "function",
 		legend: { position: "bottom" },
+		backgroundColor: "white",// window.getComputedStyle(document.body, null).getPropertyValue('background-color'),
 	};
 
 	return (

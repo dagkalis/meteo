@@ -46,8 +46,6 @@ class Api::V1::ForecastsController < ApplicationController
        }
     end
 
-    # Rails.logger.debug data.to_a.to_json
-    # Rails.logger.debug data
     render json: data
   end
 end
