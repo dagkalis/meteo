@@ -34,6 +34,10 @@ export function useGetAPI(url, params = {}) {
             // Handle the 401 Unauthorized status code here
             // For example, navigate to the login page
             navigate('/login');
+          } else if(error.response && error.response.status === 403) {
+            // Handle the 403 forbidden status code here
+            // user needs to add resume
+            navigate('/user')
           } else {
             setError(error);
             setLoading(false);
@@ -72,6 +76,10 @@ export function useGetAPIWait(url, params = {}) {
           // Handle the 401 Unauthorized status code here
           // For example, navigate to the login page
           navigate('/login');
+        } else if(error.response && error.response.status === 403) {
+          // Handle the 403 forbidden status code here
+          // user needs to add resume
+          navigate('/user')
         } else {
           setError(error);
           setLoading(false);
@@ -103,6 +111,10 @@ export function usePostAPI(url, data) {
           // Handle the 401 Unauthorized status code here
           // For example, navigate to the login page
           navigate('/login');
+        } else if(error.response && error.response.status === 403) {
+          // Handle the 403 forbidden status code here
+          // user needs to add resume
+          navigate('/user')
         } else {
           setError(error);
           setLoading(false);
@@ -136,6 +148,10 @@ export function usePatchAPI(url) {
           // Handle the 401 Unauthorized status code here
           // For example, navigate to the login page
           navigate('/login');
+        } else if(error.response && error.response.status === 403) {
+          // Handle the 403 forbidden status code here
+          // user needs to add resume
+          navigate('/user')
         } else {
           setError(error);
           setLoading(false);
@@ -172,6 +188,10 @@ export function useDeleteAPI(url) {
           // Handle the 401 Unauthorized status code here
           // For example, navigate to the login page
           navigate('/login');
+        } else if(error.response && error.response.status === 403) {
+          // Handle the 403 forbidden status code here
+          // user needs to add resume
+          navigate('/user')
         } else {
           setError(error);
           setLoading(false);

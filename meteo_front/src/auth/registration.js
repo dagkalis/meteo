@@ -28,7 +28,7 @@ export default function Registration() {
       .then((response) => {
         if (response.data.status === "created") {
           console.log("Registration data", response.data);
-          navigate('/login');
+          navigate('/user');
         }
       })
       .catch((error) => {

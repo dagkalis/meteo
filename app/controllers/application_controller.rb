@@ -9,5 +9,9 @@ class ApplicationController < ActionController::API
       Log.d "unauthorized"
       render json: "Unauthorized", status: 401
     end
+    
+    if !current_user.resume_name
+      render json: "Missing resume", status: 403
+    end
   end
 end
