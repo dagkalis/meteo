@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.scss";
 import * as Icon from 'react-bootstrap-icons';
+import * as Messages from "../components/message";
+
 
 export default function Registration() {
   const [email, setEmail] = useState("");
@@ -16,7 +18,7 @@ export default function Registration() {
     event.preventDefault();
 
     axios
-      .post(
+      .post( // todo do it using customhooks
         "http://localhost:3000/users",
         {
           user: {
@@ -35,7 +37,8 @@ export default function Registration() {
       })
       .catch((error) => {
         console.log("registration error", error);
-        alert(error.message)
+        setRegistrationErrors(error);
+        // alert(error.response?.data)
       });
   };
 
@@ -52,6 +55,7 @@ export default function Registration() {
 
   return (
     <div className="form-container container">
+      {registrationErrors ? <><Messages.DangerMsg children={registrationErrors.response?.data} /><br></br></> : '' }
       <div className="wrapper">
         <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
         <div className="title"></div>
@@ -104,10 +108,9 @@ export default function Registration() {
               <input type="submit" value="Register" />
             </div>
             
-            <p style={{color: "blue", fontSize: "14pt"}}>
-            // todo
+            {/* <p style={{color: "blue", fontSize: "14pt"}}>
               Have an account? <Link to="/login">Login</Link>
-            </p>
+            </p> */}
           </form>
         </div>
       </div>

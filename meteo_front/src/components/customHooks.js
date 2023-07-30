@@ -37,9 +37,13 @@ export function useGetAPI(url, params = {}) {
           } else if(error.response && error.response.status === 403) {
             // Handle the 403 forbidden status code here
             // user needs to add resume
-            navigate('/user')
+            navigate('/user?warning=Please%20add%20your%20resume')
           } else {
             setError(error);
+            console.log(error);
+            if(error.code === "ERR_NETWORK"){
+              error.response = {data: "Network Error!"}
+            }
             setLoading(false);
           }
         }
@@ -79,9 +83,13 @@ export function useGetAPIWait(url, params = {}) {
         } else if(error.response && error.response.status === 403) {
           // Handle the 403 forbidden status code here
           // user needs to add resume
-          navigate('/user')
+          navigate('/user?warning=Please%20add%20your%20resume')
         } else {
           setError(error);
+          console.log(error);
+          if(error.code === "ERR_NETWORK"){
+            error.response = {data: "Network Error!"}
+          }
           setLoading(false);
         }
       });
@@ -91,7 +99,7 @@ export function useGetAPIWait(url, params = {}) {
 }
 
 // Custom hook for making POST requests
-export function usePostAPI(url, data) {
+export function usePostAPI(url, data, alreadyInLogin) {
   const navigate = useNavigate();
 
   const [responseData, setResponseData] = useState(null);
@@ -107,16 +115,20 @@ export function usePostAPI(url, data) {
         setLoading(false);
       })
       .catch((error) => {
-        if (error.response && error.response.status === 401) {
+        if (!alreadyInLogin && error.response && error.response.status === 401) {
           // Handle the 401 Unauthorized status code here
           // For example, navigate to the login page
           navigate('/login');
         } else if(error.response && error.response.status === 403) {
           // Handle the 403 forbidden status code here
           // user needs to add resume
-          navigate('/user')
+          navigate('/user?warning=Please%20add%20your%20resume')
         } else {
           setError(error);
+          console.log(error);
+          if(error.code === "ERR_NETWORK"){
+            error.response = {data: "Network Error!"}
+          }
           setLoading(false);
         }
       });
@@ -136,6 +148,8 @@ export function usePatchAPI(url) {
 
   const patchData = (data) => {
     setLoading(true);
+    setError(null);
+    setResponseData(null);
 
     api.patch(url, data)
       .then((response) => {
@@ -151,9 +165,13 @@ export function usePatchAPI(url) {
         } else if(error.response && error.response.status === 403) {
           // Handle the 403 forbidden status code here
           // user needs to add resume
-          navigate('/user')
+          navigate('/user?warning=Please%20add%20your%20resume')
         } else {
           setError(error);
+          console.log(error);
+          if(error.code === "ERR_NETWORK"){
+            error.response = {data: "Network Error!"}
+          }
           setLoading(false);
         }
       });
@@ -191,9 +209,13 @@ export function useDeleteAPI(url) {
         } else if(error.response && error.response.status === 403) {
           // Handle the 403 forbidden status code here
           // user needs to add resume
-          navigate('/user')
+          navigate('/user?warning=Please%20add%20your%20resume')
         } else {
           setError(error);
+          console.log(error);
+          if(error.code === "ERR_NETWORK"){
+            error.response = {data: "Network Error!"}
+          }
           setLoading(false);
         }
       });

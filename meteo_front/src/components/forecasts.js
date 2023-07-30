@@ -7,6 +7,7 @@ import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
 import * as Icon from 'react-bootstrap-icons';
 import Loader from './loading';
+import { DangerMsg } from './message';
 
 function ForecastsView(props) {
 
@@ -104,7 +105,7 @@ function ForecastsView(props) {
           :
           (errorForecast
             ?
-            <div>Error: {errorForecast.message}</div>
+            <div><DangerMsg children={errorForecast.response.data} /></div>
             :
             <Loader />
           )

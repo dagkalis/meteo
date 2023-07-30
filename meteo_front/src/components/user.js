@@ -14,6 +14,8 @@ import Col from 'react-bootstrap/Col';
 import "../styles/login.scss";
 import Loader from './loading';
 
+import * as Messages from './message';
+
 
 
 function User(props) {
@@ -41,10 +43,28 @@ function User(props) {
 
 	return (
 		<>
-			{userPatchRequest.loading
-				? <Loader />
-				:
 				<div className="form-container container">
+				{<>
+					{userPatchRequest.error ? 
+						<>
+							<div className='container'>
+								<Messages.DangerMsg children={userPatchRequest.error.response?.data} />
+							</div>
+						</> 
+					: (userPatchRequest.responseData &&
+						<>
+							<div className='container'>
+								<Messages.SuccessMsg children="Successful user update" />
+							</div>
+						</> 
+						)}
+					{params().warning && 
+							<div className='container'>
+								<Messages.DangerMsgTimeout children={params().warning} />
+							</div>}	
+					</>}
+					<br></br>
+					<br></br>
 					<div className="wrapper user_form">
 						<img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
 						<div className="title">User Attributes</div>
@@ -63,7 +83,6 @@ function User(props) {
 						</div>
 					</div>
 				</div>
-			}
 		</>
 	)
 

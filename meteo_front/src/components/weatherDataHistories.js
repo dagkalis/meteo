@@ -4,6 +4,7 @@ import * as requests from './customHooks';
 import Loader from './loading';
 
 import Container from 'react-bootstrap/Container';
+import * as Messages from './message';
 
 
 
@@ -23,7 +24,11 @@ function WeatherDataHistories(props) {
 	}
 
 	if (error) {
-		return <div>Error: {error.message}</div>
+		return <div className='container'>
+			<div className='container'>
+				<Messages.DangerMsg children={error.response?.data} />
+			</div>
+		</div>
 	}
 
 	return (

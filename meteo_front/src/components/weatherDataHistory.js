@@ -7,7 +7,7 @@ import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
 import * as Icon from 'react-bootstrap-icons';
 import Loader from './loading';
-
+import * as Messages from './message';
 
 let deleteFlag = false; // whether deleteWeatherDataHistoryBtn has been clicked
 
@@ -42,8 +42,10 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 		return <Loader />
 	}
 
-	if (request.error) {
-		return <div>Error: {request.error}</div>
+		if (request.error) {
+		return <div className='container'>
+							<Messages.DangerMsg children={request.error.response?.data} />
+						</div>
 	}
 
 	if (request.data.length != 0) {
@@ -81,7 +83,9 @@ function DeleteRequestRender(deleteRequest, navigate) {
 	}
 
 	if (deleteRequest.error) {
-		return <div>Error with delete: {deleteRequest.error}</div>
+		return <div className='container'>
+							<Messages.DangerMsg children={deleteRequest.error.response?.data} />
+						</div>
 	}
 
 	if (deleteRequest.responseData) {

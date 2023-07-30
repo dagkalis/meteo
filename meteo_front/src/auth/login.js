@@ -5,6 +5,7 @@ import { usePostAPI } from "../components/customHooks";
 import * as Icon from 'react-bootstrap-icons';
 import "../styles/login.scss";
 import Loader from '../components/loading';
+import * as Messages from "../components/message";
 
 
 
@@ -17,7 +18,7 @@ function Login(props) {
   const navigate = useNavigate();
 
   const loginData = {};
-  const { responseData, loading, error, postData } = usePostAPI('/sessions', loginData);
+  const { responseData, loading, error, postData } = usePostAPI('/sessions', loginData, true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,8 +35,8 @@ function Login(props) {
   }, [responseData]);
 
 
-  if (error) {
-    return <div>Error: {error.message}</div>
+  if(loading){
+    console.log(loading)
   }
 
   // const handleChange = (event) => {
@@ -46,17 +47,18 @@ function Login(props) {
   //     setPassword(value);
   //   }
   // };
-  if(loading)
-    return <Loader></Loader>
+  // if(loading)
+  //   return <Loader></Loader>
 
   return (
     <>
+
       <div className="form-container container">
         <div className="wrapper">
           <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
           <div className="title"></div>
           <div id="login_notice_messages">
-
+            {error ? <><br></br><Messages.DangerMsg children={error.response?.data} /></> : '' }
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <span><Icon.Person fill="white" size="55" /></span>
