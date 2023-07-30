@@ -26,11 +26,37 @@ body::after {
 ::selection{
     background: $blue;
 }
-.container{
+.form-container{
     max-width: 440px;
     padding: 0 20px;
     margin: 170px auto;
 }
+
+.wrapper_for_table {
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 4px 10px 1px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    padding: 1em 2em;
+    margin: 3em;
+    // color: black;
+
+}
+
+.wrapper_for_table table {
+    border-color: unset;
+    // color: black;
+
+}
+
+.wrapper_for_table table th {
+    background-color: #3e3e3e54;
+    // color: white;
+    // border-color: black;
+    // color: black;
+
+}
+
+
 .wrapper{
     width: 100%;
     background: rgba(255, 255, 255, 0.18);

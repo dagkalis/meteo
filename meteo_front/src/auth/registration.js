@@ -51,7 +51,7 @@ export default function Registration() {
   };
 
   return (
-    <div className="container">
+    <div className="form-container container">
       <div className="wrapper">
         <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
         <div className="title"></div>

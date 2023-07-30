@@ -6,6 +6,7 @@ import * as requests from './customHooks';
 import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
 import * as Icon from 'react-bootstrap-icons';
+import Loader from './loading';
 
 function ForecastsView(props) {
 
@@ -59,11 +60,19 @@ function ForecastsView(props) {
     postWeatherData();
   }
 
-  if (weatherDataPostResponse) {
-    document.getElementById("storeWeatheDataBtn").disabled = true;
-  }
+  // if (weatherDataPostResponse) {
+  //   const button = document.getElementById("storeWeatheDataBtn");
+  //   if(button){
+  //     button.disabled = true;
+  //   }
+  // }
   if (Object.keys(forecastData).length > 0 && currentDate === "")
     setCurrentDate(Object.keys(forecastData)[0]) // set the first date
+
+  // return (<Loader />);
+
+  if(weatherDataPostLoading)
+    return  <Loader />
 
   return (
     <div>
@@ -86,7 +95,7 @@ function ForecastsView(props) {
 
                 <br></br><br></br>
 
-                <button style={{ float: "right" }} onClick={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
+                <button disabled={weatherDataPostResponse} style={{ float: "right" }} onClick={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
                   <Icon.Save2 fill="white" size="20" /> | Save
                 </button>
               </div>
@@ -97,7 +106,7 @@ function ForecastsView(props) {
             ?
             <div>Error: {errorForecast.message}</div>
             :
-            <div>Loading...</div>
+            <Loader />
           )
       }
 

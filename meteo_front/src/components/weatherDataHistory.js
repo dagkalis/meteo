@@ -6,6 +6,8 @@ import * as requests from './customHooks';
 import WeatherView from './weatherView';
 import ForecastDatesNav from './forecastDatesNav';
 import * as Icon from 'react-bootstrap-icons';
+import Loader from './loading';
+
 
 let deleteFlag = false; // whether deleteWeatherDataHistoryBtn has been clicked
 
@@ -37,7 +39,7 @@ function WeatherDataHistory(props) {
 let jsonData;
 function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurrentDate) {
 	if (request.loading) {
-		return <div>Loading...</div>
+		return <Loader />
 	}
 
 	if (request.error) {
@@ -75,7 +77,7 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 function DeleteRequestRender(deleteRequest, navigate) {
 
 	if (deleteRequest.loading) {
-		return <div>Deleting...</div>
+		return <Loader />
 	}
 
 	if (deleteRequest.error) {

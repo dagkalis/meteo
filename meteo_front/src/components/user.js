@@ -11,7 +11,9 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "../styles/login.scss"
+import "../styles/login.scss";
+import Loader from './loading';
+
 
 
 function User(props) {
@@ -22,8 +24,8 @@ function User(props) {
 		let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
 		event.preventDefault();
 
-		if(params().password_only){
-			formObject.password_only = true;	
+		if (params().password_only) {
+			formObject.password_only = true;
 		}
 
 		console.log(formObject)
@@ -38,25 +40,31 @@ function User(props) {
 	};
 
 	return (
-		<div className="container">
-			<div className="wrapper user_form">
-				<img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
-				<div className="title">User Attributes</div>
-				<div id="login_notice_messages">
-					<Form onSubmit={handleSubmit} >
-						{console.log(params)}
-						{!params().password_only ? userForm(userGetRequest) : passwordOnlyForm()}
+		<>
+			{userPatchRequest.loading
+				? <Loader />
+				:
+				<div className="form-container container">
+					<div className="wrapper user_form">
+						<img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
+						<div className="title">User Attributes</div>
+						<div id="login_notice_messages">
+							<Form onSubmit={handleSubmit} >
+								{console.log(params)}
+								{!params().password_only ? userForm(userGetRequest) : passwordOnlyForm()}
 
 
-						<div className='row button'>
-							<Button variant="" type="submit">
-								<Icon.Save2 fill="white" size="20" /> | Submit
-							</Button>
+								<div className='row button'>
+									<Button variant="" type="submit">
+										<Icon.Save2 fill="white" size="20" /> | Submit
+									</Button>
+								</div>
+							</Form>
 						</div>
-					</Form>
+					</div>
 				</div>
-			</div>
-		</div>
+			}
+		</>
 	)
 
 }

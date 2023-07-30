@@ -3,7 +3,10 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostAPI } from "../components/customHooks";
 import * as Icon from 'react-bootstrap-icons';
-import "../styles/login.scss"
+import "../styles/login.scss";
+import Loader from '../components/loading';
+
+
 
 function Login(props) {
 
@@ -43,47 +46,50 @@ function Login(props) {
   //     setPassword(value);
   //   }
   // };
-
+  if(loading)
+    return <Loader></Loader>
 
   return (
-    <div className="container">
-      <div className="wrapper">
-        <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
-        <div className="title"></div>
-        <div id="login_notice_messages">
+    <>
+      <div className="form-container container">
+        <div className="wrapper">
+          <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
+          <div className="title"></div>
+          <div id="login_notice_messages">
 
-          <form onSubmit={handleSubmit}>
-            <div className="row">
-              <span><Icon.Person fill="white" size="55" /></span>
-              <input
-                className="form-control"
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-              // value={email}
-              // onChange={handleChange}
-              />
-            </div>
-            <div className="row">
-              <span><Icon.Lock fill="white" size="45" /></span>
-              <input
-                className="form-control"
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-              // value={password}
-              // onChange={handleChange}
-              />
-            </div>
-            <div className="row button">
-              <input type="submit" value="Login" />
-            </div>
-          </form>
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <span><Icon.Person fill="white" size="55" /></span>
+                <input
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                // value={email}
+                // onChange={handleChange}
+                />
+              </div>
+              <div className="row">
+                <span><Icon.Lock fill="white" size="45" /></span>
+                <input
+                  className="form-control"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                // value={password}
+                // onChange={handleChange}
+                />
+              </div>
+              <div className="row button">
+                <input type="submit" value="Login" />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 
   // return (
