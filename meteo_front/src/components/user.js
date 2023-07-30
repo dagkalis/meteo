@@ -37,7 +37,7 @@ function User(props) {
 			{!params().password_only ? userForm(userGetRequest) : passwordOnlyForm()}
 
 			<Button style={{ float: "right" }} variant="" type="submit">
-				<Icon.Save2 size="20" /> | Submit
+				<Icon.Save2 fill="white" size="20" /> | Submit
 			</Button>
 		</Form>
 	)

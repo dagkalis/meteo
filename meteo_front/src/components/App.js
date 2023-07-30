@@ -13,6 +13,7 @@ import WeatherDataHistory from "./weatherDataHistory";
 import User from "./user";
 import Navbar from "./navbar";
 
+
 export default function App() {
 
   useEffect(() => {
@@ -22,37 +23,60 @@ export default function App() {
   return (
     <div className="app">
       <BrowserRouter>
-        < Navbar />
         <Routes>
           <Route
             path="/"
-            element={<ForecastsView />}
+            element={
+              <>
+              < Navbar />
+              <ForecastsView />
+              </>
+            }
           />
           <Route
             path="/login"
             element={
+              <>
+              < Navbar />
               <Login/>
+              </>
             }
           />
           <Route
             path="/registration"
             element={
+              <>
+              < Navbar />
               <Registration/>
+              </>
             }
           />
           <Route
             path="/user"
             element={
+              <>
+              < Navbar />
               <User/>
+              </>
             }
           />
           <Route
             path="/weather_data_histories"
-            element={<WeatherDataHistories />}
+            element={
+              <>
+              < Navbar />
+              <WeatherDataHistories />
+              </>
+            }
           />
           <Route
             path="/weather_data_histories/:id"
-            element={< WeatherDataHistory />}
+            element={
+              <>
+              < Navbar />
+              < WeatherDataHistory />
+              </>
+              }
           />
         </Routes>
       </BrowserRouter>

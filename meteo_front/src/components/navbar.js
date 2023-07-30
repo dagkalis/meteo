@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/navbar.scss"
 import * as Icon from 'react-bootstrap-icons';
@@ -27,16 +27,20 @@ function Navbar(props) {
 		logoutRequest.deleteData();
 	}
 
-	if (logoutRequest.responseData) {
-		navigate('/login');
-	}
+
+
+	useEffect(() => {
+		if (logoutRequest.responseData) {
+			navigate('/login');
+		}
+  }, [logoutRequest.responseData]);
 
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light">
 				<div className="container-fluid">
 					<a href="#" className="navbar-brand">
-						<img src={`${window.PUBLIC_URL}/temperature_icon.ico`} height="28" alt="Meteo" />
+						<img src={`${window.PUBLIC_URL}/temperature_icon.png`} height="38" alt="Meteo" />
 					</a>
 					<button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 						<span className="navbar-toggler-icon"></span>
@@ -62,8 +66,8 @@ function Navbar(props) {
 										</NavDropdown.Item>
 									</NavDropdown>
 
-									<a onClick={logout} className={`nav-item nav-link`} tabIndex="-1">
-										<Icon.Power size="25" />
+									<a onClick={() => logout()} className={`nav-item nav-link`} tabIndex="-1">
+										<Icon.Power fill="white" size="25" />
 									</a>
 								</>
 							}

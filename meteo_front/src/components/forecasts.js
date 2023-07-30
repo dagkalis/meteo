@@ -87,7 +87,7 @@ function ForecastsView(props) {
                 <br></br><br></br>
 
                 <button style={{ float: "right" }} onClick={storeWeatherData} id='storeWeatheDataBtn' className="float-right btn btn-lg">
-                  <Icon.Save2 size="20" /> | Save
+                  <Icon.Save2 fill="white" size="20" /> | Save
                 </button>
               </div>
             </div>

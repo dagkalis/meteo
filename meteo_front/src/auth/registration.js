@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/login.scss";
+import * as Icon from 'react-bootstrap-icons';
 
 export default function Registration() {
   const [email, setEmail] = useState("");
@@ -49,51 +51,66 @@ export default function Registration() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={handleChange}
-          />
-        </div>
+    <div className="container">
+      <div className="wrapper">
+        <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
+        <div className="title"></div>
+        <div id="login_notice_messages">
 
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={handleChange}
-          />
-        </div>
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <span><Icon.Person fill="white" size="55" /></span>
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="password"
-            name="password_confirmation"
-            placeholder="Password Confirmation"
-            required
-            value={passwordConfirmation}
-            onChange={handleChange}
-          />
-        </div>
+            <div className="row">
+              <span><Icon.Lock fill="white" size="45" /></span>
+              <input
+                className="form-control"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={handleChange}
+              />
+            </div>
 
-        <button type="submit" className="btn btn-primary btn-sm">
-          Register
-        </button>
-        <p>
-          Have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+            <div className="row">
+              <span><Icon.LockFill fill="white" size="45" /></span>
+              <input
+                className="form-control"
+                type="password"
+                name="password_confirmation"
+                placeholder="Password Confirmation"
+                required
+                value={passwordConfirmation}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* <button type="submit" className="btn btn-primary btn-sm">
+              Register
+            </button> */}
+            <div className="row button">
+              <input type="submit" value="Register" />
+            </div>
+            
+            <p style={{color: "blue", fontSize: "14pt"}}>
+            // todo
+              Have an account? <Link to="/login">Login</Link>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

@@ -63,7 +63,7 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 
 				<br></br><br></br>
 				<button style={{ float: "right" }} onClick={deleteWeatherDataHistory} id='deleteWeatherDataHistoryBtn' className="float-right btn-danger btn btn-lg">
-					<Icon.Trash size="20" /> | Delete
+					<Icon.Trash fill="white" size="20" /> | Delete
 				</button>
 			</div>
 		</>

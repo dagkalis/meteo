@@ -24,7 +24,7 @@ function WeatherDataHistories(props) {
 
 	return (
 		<div style={{ margin: "5em 8em" }}>
-			<table class="table table-bordered table-hover">
+			<table className="table table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>#</th>

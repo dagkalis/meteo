@@ -1,84 +1,129 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostAPI } from "../components/customHooks";
+import * as Icon from 'react-bootstrap-icons';
+import "../styles/login.scss"
 
 function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginErrors, setLoginErrors] = useState("");
+
+  // useEffect(() => {
+  //   // checkLoginStatus();
+  // }, []);
 
   const navigate = useNavigate();
 
-  const { responseData, loading, error, postData } = usePostAPI('/sessions', {
-    user: {
-      email: email,
-      password: password
-    }
-  });
+  const loginData = {};
+  const { responseData, loading, error, postData } = usePostAPI('/sessions', loginData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
+    loginData.user = formObject;
     postData();
   };
 
-  if(responseData?.logged_in){
-    console.log("Logged_in")
-    navigate('/');
-  }
-
-  if(error){
-    console.log("login error", error);
-    setLoginErrors("Login failed. Please check your credentials.");
-  }
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
+  useEffect(() => {
+    if (responseData?.logged_in) {
+      console.log("Logged_in")
+      navigate('/');
     }
-  };
+  }, [responseData]);
+
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "email") {
+  //     setEmail(value);
+  //   } else if (name === "password") {
+  //     setPassword(value);
+  //   }
+  // };
+
 
   return (
-    <div>
-      <h1>Login</h1>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="email"
-              name="email"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-sm">
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
-        {loginErrors && <p>{loginErrors}</p>}
+    <div className="container">
+      <div className="wrapper">
+        <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
+        <div className="title"></div>
+        <div id="login_notice_messages">
+
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <span><Icon.Person fill="white" size="55" /></span>
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+              // value={email}
+              // onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <span><Icon.Lock fill="white" size="45" /></span>
+              <input
+                className="form-control"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+              // value={password}
+              // onChange={handleChange}
+              />
+            </div>
+            <div className="row button">
+              <input type="submit" value="Login" />
+            </div>
+          </form>
+        </div>
       </div>
-      <p>
-        Don't have an account? <Link to="/registration">Register</Link>
-      </p>
     </div>
-  );
+  )
+
+  // return (
+  // <div>
+  //   <h1>Login</h1>
+  //   <div>
+  //     <form onSubmit={handleSubmit}>
+  //       <div className="form-group">
+  //         <input
+  //           className="form-control"
+  //           type="email"
+  //           name="email"
+  //           placeholder="Email"
+  //           required
+  //           value={email}
+  //           onChange={handleChange}
+  //         />
+  //       </div>
+  //       <div className="form-group">
+  //         <input
+  //           className="form-control"
+  //           type="password"
+  //           name="password"
+  //           placeholder="Password"
+  //           required
+  //           value={password}
+  //           onChange={handleChange}
+  //         />
+  //       </div>
+  //       <button type="submit" className="btn btn-primary btn-sm">
+  //         {loading ? 'Logging in...' : 'Login'}
+  //       </button>
+  //     </form>
+  //     {loginErrors && <p>{loginErrors}</p>}
+  //   </div>
+  //   <p>
+  //     Don't have an account? <Link to="/registration">Register</Link>
+  //   </p>
+  // </div>
+  // );
 }
 
 export default Login;

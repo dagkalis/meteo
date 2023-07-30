@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/navbar.scss"
-import * as Icon from 'react-bootstrap-icons';
+// import * as Icon from 'react-bootstrap-icons';
 
 import * as requests from './customHooks';
 
