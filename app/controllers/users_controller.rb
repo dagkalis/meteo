@@ -19,13 +19,32 @@ class UsersController < ApplicationController
   end
 
   def update
+    if params[:password_only]
+      change_password
+      return
+    end
     user = current_user
     if user.update(user_params)
       Log.d :updated
       render json: "ok", status: 200
     else
       Log.d :not_updated
-      render json: { json: user.errors, status: 422 }
+      render json: user.errors, status: 422
+    end
+  end
+
+  def change_password
+    user = current_user.try(:authenticate, params["old_password"])
+    if user
+      if user.update(change_password_params)
+        Log.d :updated_password
+        render json: "ok", status: 200
+      else
+        Log.d :not_updated_password
+        render json: user.errors.full_messages, status: 422
+      end
+    else
+      render json: "Wrong old password. Please try again", status: 422
     end
   end
 
@@ -41,7 +60,11 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:email, :resume_data, :password, :password_confirmation)
+    params.permit(:email, :resume_data)
+  end
+
+  def change_password_params
+    params.permit(:password, :password_confirmation)
   end
 
   # def user_password_params

@@ -11,6 +11,8 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import "../styles/login.scss"
+
 
 function User(props) {
 	const userGetRequest = requests.useGetAPI('/users/current_user_data');
@@ -19,6 +21,10 @@ function User(props) {
 	const handleSubmit = (event) => {
 		let formObject = Object.fromEntries(new FormData(event.currentTarget).entries());
 		event.preventDefault();
+
+		if(params().password_only){
+			formObject.password_only = true;	
+		}
 
 		console.log(formObject)
 
@@ -32,14 +38,25 @@ function User(props) {
 	};
 
 	return (
-		<Form style={{ margin: "5em" }} onSubmit={handleSubmit} >
-			{console.log(params)}
-			{!params().password_only ? userForm(userGetRequest) : passwordOnlyForm()}
+		<div className="container">
+			<div className="wrapper user_form">
+				<img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
+				<div className="title">User Attributes</div>
+				<div id="login_notice_messages">
+					<Form onSubmit={handleSubmit} >
+						{console.log(params)}
+						{!params().password_only ? userForm(userGetRequest) : passwordOnlyForm()}
 
-			<Button style={{ float: "right" }} variant="" type="submit">
-				<Icon.Save2 fill="white" size="20" /> | Submit
-			</Button>
-		</Form>
+
+						<div className='row button'>
+							<Button variant="" type="submit">
+								<Icon.Save2 fill="white" size="20" /> | Submit
+							</Button>
+						</div>
+					</Form>
+				</div>
+			</div>
+		</div>
 	)
 
 }
@@ -54,50 +71,60 @@ function params() {
 	return _params;
 }
 
-function userForm(userGetRequest) {
-	return (<>
-		<Row className="mb-3">
-			<Form.Group as={Col} controlId="formGridEmail">
-				<Form.Label>Email</Form.Label>
-				<input className="form-control" type="email" name="email" placeholder="email" required defaultValue={userGetRequest.data?.email || ''} />
-			</Form.Group>
-		</Row>
 
-		<Row className="mb-3">
-			<Form.Group as={Col} controlId="formGridResume">
-				<Form.Label>Resume</Form.Label>
+function userForm(userGetRequest) {
+	const title = userGetRequest.data?.resume_name ? 'Download current resume' : '';
+	const styleObj = userGetRequest.data?.resume_name ? { cursor: "pointer" } : {};
+	const onClickBtn = () => {
+		userGetRequest.data?.resume_name
+			?
+			window.open(userGetRequest.data?.resume_url, "_blank")
+			:
+			console.log('not there')
+	}
+	return (<>
+		<div className='user_data_form'>
+			<div className="row">
+				<span><Icon.Person fill="white" size="" />Email</span>
 				<input
 					className="form-control"
-					type="file"
-					id="resume_file"
-					name="resume_data"
-					placeholder="Resume"
+					type="email"
+					name="email"
+					placeholder="Email"
+					required
+					defaultValue={userGetRequest.data?.email || ''}
+				// value={email}
+				// onChange={handleChange}
 				/>
-			</Form.Group>
+			</div>
 
-			<Form.Group as={Col} controlId="formGridPassword">
-				<Form.Label>Current resume</Form.Label>
-				<Row>
-					<Col>
-						<input
-							className="form-control col"
-							type="text"
-							disabled
-							value={userGetRequest.data?.resume_name || ''}
-						/>
-					</Col>
-					<Col>
-						{userGetRequest.data?.resume_name
-							?
-							<button onClick={() => { window.open(userGetRequest.data?.resume_url, "_blank"); }} className="btn">
-								Show
-							</button>
-							:
-							''}
-					</Col>
-				</Row>
-			</Form.Group>
-		</Row>
+
+			<div className="row">
+				<div className='col' style={{ "padding-left": "0", width: "90%" }}>
+					<span><Icon.Paperclip fill="white" />Resume</span>
+					<input style={{ width: "90%" }}
+						className="form-control"
+						type="file"
+						id="resume_file"
+						name="resume_data"
+						placeholder="Resume"
+					/>
+				</div>
+
+				<div className='col' title={title} style={Object.assign({ padding: "0" }, styleObj)}
+					onClick={onClickBtn} >
+					<span><Icon.Paperclip fill="white" />Current</span>
+
+					<input style={styleObj} title={title} onClick={onClickBtn}
+						className="form-control col"
+						type="text"
+						readOnly='true'
+						value={userGetRequest.data?.resume_name || ''}
+					/>
+
+				</div>
+			</div>
+		</div>
 	</>)
 }
 
@@ -105,41 +132,35 @@ function userForm(userGetRequest) {
 function passwordOnlyForm() {
 	return (
 		<>
-			<Row className="mb-3">
-				<Form.Group as={Col} controlId="formGridOldPassword">
-					<Form.Label>Old Password</Form.Label>
-					<input
-						className="form-control col"
-						type="password"
-						id="old_password"
-						name="old_password"
-						placeholder="Old Password"
-					/>
-				</Form.Group>
-				<Form.Group as={Col} controlId="formGridResume"></Form.Group>
-			</Row>
 
-			<Row className="mb-3">
-				<Form.Group as={Col} controlId="formGridResume">
-					<Form.Label>New Password</Form.Label>
-					<input
-						className="form-control col"
-						type="password"
-						name="password"
-						placeholder="Password"
-					/>
-				</Form.Group>
-
-				<Form.Group as={Col} controlId="formGridResume">
-					<Form.Label>Confirm New Password</Form.Label>
-					<input
-						className="form-control col"
-						type="password"
-						name="password_confirmation"
-						placeholder="Password Confirmation"
-					/>
-				</Form.Group>
-			</Row>
+			<div className="row">
+				<span><Icon.Person fill="white" /></span>
+				<input
+					className="form-control col"
+					type="password"
+					id="old_password"
+					name="old_password"
+					placeholder="Old Password"
+				/>
+			</div>
+			<div className="row">
+				<span><Icon.Lock fill="white" /></span>
+				<input
+					className="form-control col"
+					type="password"
+					name="password"
+					placeholder="Password"
+				/>
+			</div>
+			<div className="row">
+				<span><Icon.LockFill fill="white" /></span>
+				<input
+					className="form-control col"
+					type="password"
+					name="password_confirmation"
+					placeholder="Password Confirmation"
+				/>
+			</div>
 		</>
 	)
 }
