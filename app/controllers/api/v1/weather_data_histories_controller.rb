@@ -33,7 +33,7 @@ class Api::V1::WeatherDataHistoriesController < ApplicationController
     if result
       render json: @weather_data_history, status: :created#, location: @weather_data_history
     else
-      render json: @weather_data_history.errors, status: :unprocessable_entity
+      render json: @weather_data_history.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -42,7 +42,7 @@ class Api::V1::WeatherDataHistoriesController < ApplicationController
     if @weather_data_history.update(weather_data_history_params)
       render json: @weather_data_history
     else
-      render json: @weather_data_history.errors, status: :unprocessable_entity
+      render json: @weather_data_history.errors.full_messages, status: :unprocessable_entity
     end
   end
 

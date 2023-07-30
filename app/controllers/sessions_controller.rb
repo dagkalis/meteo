@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
       }
     else
       Log.d :failed_login
-      render json: { status: 401 }
+      render json: "Invalid Email or Password", status: 401
+      # render json: "Invalid Email or Password" status: 401 
     end
   end
 

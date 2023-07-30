@@ -1,20 +1,20 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!#, only: [:create]
   def create
-    user = User.create!(
+    user = User.new(
       email: params["user"]["email"],
       password: params["user"]["password"],
       password_confirmation: params["user"]["password_confirmation"]
     )
 
-    if user
+    if user.save
       session[:user_id] = user.id
       render json: {
         status: :created,
         user: user
       }
     else
-      render json: { status: 500 }
+      render json: user.errors.full_messages, status: 422
     end
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       render json: "ok", status: 200
     else
       Log.d :not_updated
-      render json: user.errors, status: 422
+      render json: user.errors.full_messages, status: 422
     end
   end
 

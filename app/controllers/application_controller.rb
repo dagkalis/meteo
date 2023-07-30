@@ -7,9 +7,9 @@ class ApplicationController < ActionController::API
     # reset_session
     if !@current_user
       Log.d "unauthorized"
-      render json: "Unauthorized", status: 401
+      render json: "Please login first", status: 401
     elsif !current_user.resume_name
-      render json: "Missing resume", status: 403
+      render json: "Please update your resume first", status: 403
     end
   end
 end
