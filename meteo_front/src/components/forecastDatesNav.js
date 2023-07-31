@@ -7,6 +7,7 @@ import * as requests from './customHooks';
 
 // import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import {ViewType} from './weatherView';
 
 
 function ForecastDatesNav(props) {
@@ -23,6 +24,21 @@ function ForecastDatesNav(props) {
 		props.setCurrentDate(event.target.id);
 	}
 
+	function isActiveViewType(viewType) {
+		console.log(props.currentViewType, viewType, props.currentViewType === viewType)
+		if (props.currentViewType === viewType) {
+			return 'active'
+		}
+		return ''
+	}
+
+	function chooseViewType(event) {
+		console.log("target", event.target.id);
+		console.log("curr", props.currentViewType);
+		props.setCurrentViewType(event.target.id);
+	}
+	// console.log(ViewType);
+	// console.log(props.currentViewType)
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light">
@@ -37,6 +53,16 @@ function ForecastDatesNav(props) {
 								);
 							})}
 
+						</div>
+						<div className="navbar-nav ms-auto">
+							{Object.values(ViewType).map((viewType) => {
+								console.log(viewType);
+								return (
+									<a id={viewType} key={viewType} onClick={chooseViewType} className={`nav-item nav-link ${isActiveViewType(viewType)}`}>
+										{viewType}
+									</a>
+								);
+							})}
 						</div>
 					</div>
 				</div>

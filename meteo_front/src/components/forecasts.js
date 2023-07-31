@@ -9,12 +9,15 @@ import * as Icon from 'react-bootstrap-icons';
 import Loader from './loading';
 import { DangerMsg } from './message';
 
+import { ViewType } from './weatherView';
+
 function ForecastsView(props) {
 
   let forecastParams = {};
   const { responseData: forecastData, loading: loadingForecast, error: errorForecast, getData: getForecastData } = requests.useGetAPIWait('/api/v1/forecasts', forecastParams);
 
   const [currentDate, setCurrentDate] = useState("");
+  const [currentViewType, setCurrentViewType] = useState(ViewType.CHART);
 
   let weatherDataHistoryParams = {};
   const { responseData: weatherDataPostResponse,
@@ -87,12 +90,15 @@ function ForecastsView(props) {
               {<ForecastDatesNav dates={Object.keys(forecastData)}
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}
+                currentViewType={currentViewType}
+                setCurrentViewType={setCurrentViewType}
               />}
 
 
               <div style={{ margin: "1em" }}>
                 {< WeatherView weatherData={forecastData}
-                  currentDate={currentDate} />}
+                  currentDate={currentDate}
+                  currentViewType={currentViewType} />}
 
                 <br></br><br></br>
 

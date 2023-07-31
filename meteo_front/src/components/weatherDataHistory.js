@@ -8,6 +8,8 @@ import ForecastDatesNav from './forecastDatesNav';
 import * as Icon from 'react-bootstrap-icons';
 import Loader from './loading';
 import * as Messages from './message';
+import { ViewType } from './weatherView';
+
 
 let deleteFlag = false; // whether deleteWeatherDataHistoryBtn has been clicked
 
@@ -25,11 +27,18 @@ function WeatherDataHistory(props) {
 	}
 
 	const [currentDate, setCurrentDate] = useState("");
+	const [currentViewType, setCurrentViewType] = useState(ViewType.CHART);
+
 
 	if (deleteFlag) {
 		return DeleteRequestRender(deleteRequest, navigate);
 	} else {
-		return RequestRender(request, deleteWeatherDataHistory, currentDate, setCurrentDate);
+		return RequestRender(request,
+			 deleteWeatherDataHistory,
+			 currentDate,
+			 setCurrentDate,
+			 currentViewType,
+			 setCurrentViewType);
 	}
 
 
@@ -37,7 +46,7 @@ function WeatherDataHistory(props) {
 }
 
 let jsonData;
-function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurrentDate) {
+function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurrentDate, currentViewType, setCurrentViewType) {
 	if (request.loading) {
 		return <Loader />
 	}
@@ -60,10 +69,14 @@ function RequestRender(request, deleteWeatherDataHistory, currentDate, setCurren
 				{<ForecastDatesNav dates={Object.keys(jsonData)}
 					currentDate={currentDate}
 					setCurrentDate={setCurrentDate}
+					currentViewType={currentViewType}
+          setCurrentViewType={setCurrentViewType}
 				/>}
 
 				{< WeatherView weatherData={jsonData}
-					currentDate={currentDate} />}
+					currentDate={currentDate}
+					currentViewType={currentViewType}
+				 />}
 
 				<br></br><br></br>
 				<button style={{ float: "right" }} onClick={deleteWeatherDataHistory} id='deleteWeatherDataHistoryBtn' className="float-right btn-danger btn btn-lg">
