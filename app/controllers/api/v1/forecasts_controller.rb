@@ -15,7 +15,7 @@ class Api::V1::ForecastsController < ApplicationController
 
     # https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41
     # Make the API request
-    uri = URI("#{base_url}?latitude=#{latitude}&longitude=#{longitude}&hourly=temperature_2m")
+    uri = URI("#{base_url}?latitude=#{latitude}&longitude=#{longitude}&hourly=temperature_2m&timezone=auto")
     Log.d uri
     response = Net::HTTP.get(uri)
 
