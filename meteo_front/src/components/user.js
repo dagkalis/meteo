@@ -58,10 +58,15 @@ function User(props) {
 							</div>
 						</> 
 						)}
-					{params().warning && 
+						{params().success && 
+						<div className='container'>
+							<Messages.SuccessMsg children={params().success} />
+						</div>}	
+						{params().warning && 
 							<div className='container'>
 								<Messages.DangerMsgTimeout children={params().warning} />
-							</div>}	
+							</div>}
+						
 					</>}
 					<br></br>
 					<br></br>

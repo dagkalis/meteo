@@ -4,43 +4,37 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.scss";
 import * as Icon from 'react-bootstrap-icons';
 import * as Messages from "../components/message";
+import * as requests from "../components/customHooks";
+
 
 
 export default function Registration() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [registrationErrors, setRegistrationErrors] = useState("");
 
-  const navigate = useNavigate();
+  // { responseData, loading, error, postData }
+  const request = requests.usePostAPI("/users", {
+    user: {
+      email: email,
+      password: password,
+      password_confirmation: passwordConfirmation,
+    },
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    axios
-      .post( // todo do it using customhooks
-        "http://localhost:3000/users",
-        {
-          user: {
-            email: email,
-            password: password,
-            password_confirmation: passwordConfirmation
-          }
-        },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        if (response.data.status === "created") {
-          console.log("Registration data", response.data);
-          navigate('/user');
-        }
-      })
-      .catch((error) => {
-        console.log("registration error", error);
-        setRegistrationErrors(error);
-        // alert(error.response?.data)
-      });
+    request.postData(); // Make the POST request when the registration form is submitted
   };
+
+  if(request.responseData){
+    if (request.responseData.status === "created") {
+      console.log("Registration data", request.responseData.data);
+      navigate('/user?success=You registration has been succesful&warning=Please add your resume to complete the registration');
+    }
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -55,7 +49,7 @@ export default function Registration() {
 
   return (
     <div className="form-container container">
-      {registrationErrors ? <><Messages.DangerMsg children={registrationErrors.response?.data} /><br></br></> : '' }
+      {request.error && <><Messages.DangerMsg children={request.error.response?.data}/><br></br></>}
       <div className="wrapper">
         <img src={`${window.PUBLIC_URL}/temperature_icon.png`} />
         <div className="title"></div>
