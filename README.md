@@ -20,9 +20,11 @@ Here's what the app offers:
 - **Personalize Your Profile:** Edit your profile details and change your password.
 
 
-![chart loading](https://github.com/dagkalis/meteo/assets/56542304/948243ba-521e-424b-9de5-2b13d55e1e21)
-![registration](https://github.com/dagkalis/meteo/assets/56542304/5253e98e-9721-4098-9fb6-6b8824787e70)
-![user_update](https://github.com/dagkalis/meteo/assets/56542304/e64d77cc-3e2f-4c90-acf2-7d2c883f2028)
-![raw_data](https://github.com/dagkalis/meteo/assets/56542304/cac46f4e-9b81-4503-8505-cf4d054aac28)
+![chart loading](https://github.com/dagkalis/meteo/assets/56542304/98914918-e70e-4ce0-9057-c6c2fcfb0287)
+![registration](https://github.com/dagkalis/meteo/assets/56542304/39c28603-855f-451c-8563-370cab7ade54)
+![user_update](https://github.com/dagkalis/meteo/assets/56542304/13a4af80-3129-4fcf-99b6-d9bb575730eb)
+![raw_data](https://github.com/dagkalis/meteo/assets/56542304/9d52f61d-406c-4ac9-89fc-38297b97ed4f)
+
+
 
 <br><br><br>
